@@ -4,40 +4,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pablo Frías — Desarrollador de Software</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
+  <title>Pablo Frías — Automatización de WhatsApp y citas para negocios</title>
+  <meta name="description"
+    content="Automatizo la atención por WhatsApp y las citas de negocios con atención al público: respuestas fijas sin IA, derivación a una persona y datos en la UE.">
+  <meta name="theme-color" content="#0f1216">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1216'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='15' fill='%235eead4'%3EPF%3C/text%3E%3C/svg%3E">
   <style>
     :root {
-      --bg: #0e1117;
-      --surface: #161b24;
-      --surface-2: #1c2230;
-      --border: #262d3b;
-      --text: #e8edf5;
-      --text-dim: #8b95a7;
+      --bg: #0f1216;
+      --surface: #161a20;
+      --surface-2: #1d222a;
+      --border: #2a313b;
+      --text: #e9edf2;
+      --text-dim: #a3adba;
       --accent: #5eead4;
-      --accent-dim: #2f6f65;
-      --accent-2: #f2b84b;
-      --danger-dot: #ff5f57;
-      --amber-dot: #febc2e;
-      --green-dot: #28c840;
-      --radius: 10px;
-      --font-display: 'Space Grotesk', sans-serif;
-      --font-body: 'Inter', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --accent-soft: rgba(94, 234, 212, 0.1);
+      --radius: 12px;
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 72px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -46,7 +47,6 @@
       }
 
       * {
-        animation-duration: 0.001ms !important;
         transition-duration: 0.001ms !important;
       }
     }
@@ -54,34 +54,19 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-body);
+      font-family: var(--font);
+      font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 15% 10%, rgba(94, 234, 212, 0.06), transparent 40%),
-        radial-gradient(circle at 85% 30%, rgba(242, 184, 75, 0.05), transparent 40%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
     a {
-      color: inherit;
-      text-decoration: none;
+      color: var(--accent);
     }
 
-    ul {
+    ul,
+    ol {
       list-style: none;
-    }
-
-    section {
-      position: relative;
-      z-index: 1;
     }
 
     :focus-visible {
@@ -90,215 +75,107 @@
       border-radius: 4px;
     }
 
+    .skip {
+      position: absolute;
+      left: 16px;
+      top: -60px;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      z-index: 100;
+    }
+
+    .skip:focus {
+      top: 12px;
+    }
+
     .wrap {
       max-width: 1080px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* NAV */
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 0 18px;
+      }
+    }
+
+    /* CABECERA */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(10px);
-      background: rgba(14, 17, 23, 0.75);
+      background: rgba(15, 18, 22, 0.88);
+      backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
     }
 
     nav {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
+      min-height: 60px;
     }
 
     .logo {
-      font-family: var(--font-mono);
-      font-weight: 600;
-      font-size: 15px;
+      font-weight: 700;
+      font-size: 16px;
       color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .logo::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 2px;
-      background: var(--accent);
-      display: inline-block;
-      box-shadow: 0 0 8px var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
     }
 
     .navlinks {
       display: none;
-      gap: 28px;
-      font-size: 14px;
-      color: var(--text-dim);
+      gap: 26px;
+      font-size: 14.5px;
     }
 
     .navlinks a {
-      transition: color .15s ease;
+      color: var(--text-dim);
+      text-decoration: none;
     }
 
     .navlinks a:hover {
-      color: var(--accent);
+      color: var(--text);
     }
 
-    @media (min-width: 760px) {
+    @media (min-width: 820px) {
       .navlinks {
         display: flex;
       }
     }
 
-    .nav-cta {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      padding: 8px 16px;
-      border: 1px solid var(--accent-dim);
-      border-radius: 6px;
-      color: var(--accent);
-      transition: all .15s ease;
-    }
-
-    .nav-cta:hover {
-      background: rgba(94, 234, 212, 0.08);
-      border-color: var(--accent);
-    }
-
-    /* HERO */
-    .hero {
-      padding: 90px 0 70px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    @media (min-width: 860px) {
-      .hero-grid {
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: 40px;
-      }
-    }
-
-    .eyebrow {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--accent);
-      letter-spacing: 0.03em;
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      font-family: var(--font-display);
-      font-size: clamp(38px, 6vw, 58px);
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      margin-bottom: 22px;
-    }
-
-    /* role tabs */
-    .role-tabs {
-      display: inline-flex;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 4px;
-      gap: 4px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
-
-    .role-tab {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      padding: 8px 14px;
-      border-radius: 6px;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all .15s ease;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      border: none;
-      background: transparent;
-    }
-
-    .role-tab .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--text-dim);
-    }
-
-    .role-tab.active {
-      background: var(--surface-2);
-      color: var(--accent);
-    }
-
-    .role-tab.active .dot {
-      background: var(--accent);
-      box-shadow: 0 0 6px var(--accent);
-    }
-
-    .role-tab:hover:not(.active) {
-      color: var(--text);
-    }
-
-    .role-desc {
-      font-size: 15px;
-      color: var(--text-dim);
-      min-height: 20px;
-      margin-bottom: 26px;
-    }
-
-    .hero p.lede {
-      font-size: 16.5px;
-      color: var(--text-dim);
-      max-width: 480px;
-      margin-bottom: 32px;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
+    /* BOTONES */
     .btn {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      padding: 12px 22px;
-      border-radius: 7px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      transition: all .15s ease;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background-color .15s ease, border-color .15s ease, color .15s ease;
     }
 
     .btn-primary {
       background: var(--accent);
-      color: #0e1117;
-      font-weight: 600;
+      color: #0b1412;
     }
 
     .btn-primary:hover {
-      background: #7ff2df;
-      transform: translateY(-1px);
+      background: #8af3e2;
     }
 
     .btn-ghost {
-      border: 1px solid var(--border);
+      border-color: var(--border);
       color: var(--text);
     }
 
@@ -307,641 +184,898 @@
       color: var(--accent);
     }
 
-    /* avatar card — mac-style window */
-    .avatar-card {
+    .btn-sm {
+      font-size: 14px;
+      padding: 8px 14px;
+    }
+
+    /* SECCIONES */
+    section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 480px) {
+      section {
+        padding: 56px 0;
+      }
+    }
+
+    .section-tag {
+      display: block;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    h2 {
+      font-size: clamp(26px, 4vw, 34px);
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      color: var(--text-dim);
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+
+    .dim {
+      color: var(--text-dim);
+    }
+
+    /* HERO */
+    .hero {
+      border-top: none;
+      padding: 96px 0 88px;
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 56px 0 56px;
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    .eyebrow {
+      display: block;
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5.6vw, 56px);
+      font-weight: 750;
+      line-height: 1.08;
+      margin-bottom: 22px;
+    }
+
+    .lede {
+      font-size: 18px;
+      color: var(--text-dim);
+      max-width: 560px;
+      margin-bottom: 32px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-points {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      font-size: 14.5px;
+      color: var(--text-dim);
+    }
+
+    .hero-points li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check {
+      width: 16px;
+      height: 16px;
+      flex: none;
+      color: var(--accent);
+    }
+
+    /* Conversación de ejemplo (texto ficticio, sin datos reales) */
+    .chat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 14.5px;
+    }
+
+    .chat-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-dim);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+
+    .msg {
+      max-width: 86%;
+      padding: 9px 13px;
+      border-radius: 12px;
+      line-height: 1.45;
+    }
+
+    .msg-in {
+      align-self: flex-start;
+      background: var(--surface-2);
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg-out {
+      align-self: flex-end;
+      background: var(--accent-soft);
+      border: 1px solid rgba(94, 234, 212, 0.25);
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg small {
+      display: block;
+      font-size: 11.5px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    .chat-note {
+      font-size: 12.5px;
+      color: var(--text-dim);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* SERVICIOS */
+    .cards {
+      display: grid;
+      gap: 20px;
+    }
+
+    @media (min-width: 760px) {
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+    }
+
+    .card p {
+      color: var(--text-dim);
+      font-size: 15px;
+    }
+
+    .card ul {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14.5px;
+      color: var(--text-dim);
+    }
+
+    .card li,
+    .bullets li {
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .card li::before,
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 0.62em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .card-num {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    /* CASO */
+    .case {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
     }
 
-    .window-bar {
+    .case-head {
+      padding: 28px 28px 0;
+    }
+
+    .case-meta {
       display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 11px 14px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface-2);
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
     }
 
-    .window-bar span {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .window-bar span:nth-child(1) {
-      background: var(--danger-dot);
-    }
-
-    .window-bar span:nth-child(2) {
-      background: var(--amber-dot);
-    }
-
-    .window-bar span:nth-child(3) {
-      background: var(--green-dot);
-    }
-
-    .avatar-body {
-      padding: 34px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 14px;
-    }
-
-    .avatar-circle {
-      width: 128px;
-      height: 128px;
-      border-radius: 50%;
+    .chip {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--text-dim);
       background: var(--surface-2);
       border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      padding: 3px 10px;
+      border-radius: 6px;
     }
 
-    .avatar-circle svg {
-      width: 74%;
-      height: 74%;
-      color: var(--text-dim);
-    }
-
-    .avatar-name {
-      font-family: var(--font-display);
-      font-size: 19px;
-      font-weight: 600;
-    }
-
-    .avatar-role {
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-      color: var(--accent);
-    }
-
-    .avatar-meta {
-      font-size: 13px;
-      color: var(--text-dim);
-    }
-
-    .avatar-status {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-top: 6px;
-    }
-
-    .avatar-status .pulse {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green-dot);
-      box-shadow: 0 0 6px var(--green-dot);
-    }
-
-    /* SECTION HEADERS */
-    .section-head {
-      margin-bottom: 40px;
-    }
-
-    .section-tag {
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-      color: var(--accent);
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(26px, 4vw, 34px);
-      font-weight: 700;
-    }
-
-    section.block {
-      padding: 70px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ABOUT */
-    .about-grid {
+    .case-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 44px;
+      gap: 28px;
+      padding: 28px;
     }
 
     @media (min-width: 860px) {
-      .about-grid {
+      .case-grid {
         grid-template-columns: 1fr 1fr;
+        gap: 36px;
       }
     }
 
-    .about-text p {
-      color: var(--text-dim);
-      margin-bottom: 16px;
-      font-size: 15.5px;
+    .case h4 {
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--accent);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
     }
 
-    .about-text strong {
+    .case-block+.case-block {
+      margin-top: 26px;
+    }
+
+    .case p,
+    .bullets {
+      color: var(--text-dim);
+      font-size: 15px;
+    }
+
+    .bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bullets strong {
       color: var(--text);
       font-weight: 600;
     }
 
-    .skills-groups {
+    /* Diagrama de arquitectura */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      counter-reset: paso;
+    }
+
+    .flow li {
+      position: relative;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px 12px 50px;
+      font-size: 14.5px;
+      color: var(--text-dim);
+    }
+
+    .flow li strong {
+      display: block;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .flow li::before {
+      counter-increment: paso;
+      content: counter(paso);
+      position: absolute;
+      left: 14px;
+      top: 13px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flow li+li {
+      margin-top: 22px;
+    }
+
+    .flow li+li::after {
+      content: "";
+      position: absolute;
+      left: 25px;
+      top: -23px;
+      width: 2px;
+      height: 22px;
+      background: var(--border);
+    }
+
+    .case-foot {
+      border-top: 1px solid var(--border);
+      padding: 18px 28px;
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+
+    /* CÓMO TRABAJO */
+    .steps {
+      display: grid;
+      gap: 18px;
+      counter-reset: step;
+    }
+
+    @media (min-width: 760px) {
+      .steps {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .step {
+      border-top: 2px solid var(--accent);
+      padding-top: 16px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: "Paso " counter(step);
+      display: block;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .step p {
+      color: var(--text-dim);
+      font-size: 15px;
+    }
+
+    .principles {
+      margin-top: 48px;
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 760px) {
+      .principles {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .principle {
+      display: flex;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .principle svg {
+      width: 22px;
+      height: 22px;
+      flex: none;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .principle h3 {
+      font-size: 16.5px;
+      margin-bottom: 4px;
+    }
+
+    .principle p {
+      color: var(--text-dim);
+      font-size: 14.5px;
+    }
+
+    /* CONTACTO */
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 760px) {
+      .contact-box {
+        grid-template-columns: 1.3fr 1fr;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-box {
+        padding: 24px;
+      }
+    }
+
+    .contact-box p {
+      color: var(--text-dim);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (min-width: 760px) {
+      .contact-links {
+        justify-content: flex-end;
+      }
+    }
+
+    /* PERFIL */
+    .profile-grid {
+      display: grid;
+      gap: 36px;
+    }
+
+    @media (min-width: 860px) {
+      .profile-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 48px;
+      }
+    }
+
+    .profile-grid p {
+      color: var(--text-dim);
+      font-size: 15.5px;
+      margin-bottom: 14px;
+    }
+
+    .profile-grid strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .timeline {
       display: flex;
       flex-direction: column;
       gap: 18px;
     }
 
-    .skill-group-label {
-      font-family: var(--font-mono);
-      font-size: 12px;
+    .timeline li {
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+    }
+
+    .timeline .t-title {
+      font-weight: 600;
+    }
+
+    .timeline .t-meta {
+      font-size: 14px;
       color: var(--text-dim);
-      margin-bottom: 8px;
     }
 
     .pill-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-    }
-
-    .pill {
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    /* TIMELINE */
-    .timeline {
-      position: relative;
-      padding-left: 28px;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 5px;
-      top: 6px;
-      bottom: 6px;
-      width: 1px;
-      background: var(--border);
-    }
-
-    .commit {
-      position: relative;
-      padding-bottom: 36px;
-    }
-
-    .commit:last-child {
-      padding-bottom: 0;
-    }
-
-    .commit::before {
-      content: "";
-      position: absolute;
-      left: -28px;
-      top: 4px;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 2px solid var(--accent);
-    }
-
-    .commit-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .commit-meta {
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-      color: var(--text-dim);
-      margin-bottom: 10px;
-    }
-
-    .commit-body {
-      color: var(--text-dim);
-      font-size: 14.5px;
-    }
-
-    .commit-body ul {
       margin-top: 8px;
     }
 
-    .commit-body li {
-      padding-left: 16px;
-      position: relative;
-      margin-bottom: 6px;
-    }
-
-    .commit-body li::before {
-      content: "—";
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-    }
-
-    /* PROJECTS — mac-style window cards */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 22px;
-    }
-
-    @media (min-width: 700px) {
-      .projects-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .project-card {
+    .pill {
+      font-size: 13px;
+      padding: 4px 11px;
+      border-radius: 6px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color .15s ease, transform .15s ease;
     }
 
-    .project-card:hover {
-      border-color: var(--accent-dim);
-      transform: translateY(-2px);
-    }
-
-    .project-body {
-      padding: 22px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-tag {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--accent-2);
-      border: 1px solid rgba(242, 184, 75, 0.3);
-      padding: 2px 8px;
-      border-radius: 4px;
-      width: fit-content;
-      margin-bottom: 12px;
-    }
-
-    .project-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .project-desc {
+    .label {
+      font-size: 13px;
       color: var(--text-dim);
-      font-size: 14px;
-      margin-bottom: 16px;
-      flex: 1;
+      margin-top: 22px;
     }
 
-    .project-stack {
+    .side-project {
+      margin-top: 40px;
+      padding: 20px 22px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 24px;
     }
 
-    .stack-chip {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      background: var(--surface-2);
-      padding: 3px 9px;
-      border-radius: 4px;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 16px;
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-    }
-
-    .project-links span {
-      color: var(--text-dim);
-      opacity: 0.6;
-      cursor: default;
-    }
-
-    /* CONTACT */
-    .contact-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    @media (min-width: 700px) {
-      .contact-box {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-
-    .contact-box h3 {
-      font-family: var(--font-display);
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .contact-box p {
+    .side-project p {
       color: var(--text-dim);
       font-size: 14.5px;
-      max-width: 420px;
+      margin: 0;
+      max-width: 620px;
     }
 
-    .contact-links {
+    .side-project .links {
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 14.5px;
     }
 
     footer {
-      padding: 30px 0 40px;
-      text-align: center;
+      border-top: 1px solid var(--border);
+      padding: 28px 0 36px;
       color: var(--text-dim);
-      font-family: var(--font-mono);
-      font-size: 12.5px;
+      font-size: 13.5px;
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 20px;
     }
   </style>
 </head>
 
 <body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
 
   <header>
-    <nav>
-      <div class="logo">pablo.frias</div>
-      <ul class="navlinks">
-        <li><a href="#sobre-mi">Sobre mí</a></li>
-        <li><a href="#experiencia">Experiencia</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-      <a class="nav-cta" href="#contacto">Contactar</a>
-    </nav>
+    <div class="wrap">
+      <nav aria-label="Principal">
+        <a class="logo" href="#inicio">Pablo Frías</a>
+        <ul class="navlinks">
+          <li><a href="#servicios">Qué hago</a></li>
+          <li><a href="#casos">Casos</a></li>
+          <li><a href="#como-trabajo">Cómo trabajo</a></li>
+          <li><a href="#perfil">Perfil</a></li>
+        </ul>
+        <a class="btn btn-ghost btn-sm" href="#contacto">Contacto</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section class="hero">
+  <main id="contenido">
+    <section class="hero" id="inicio">
       <div class="wrap hero-grid">
         <div>
-          <span class="eyebrow">Bienvenido</span>
-          <h1>Pablo Frías</h1>
-
-          <div class="role-tabs" role="tablist" aria-label="Roles profesionales">
-            <button class="role-tab active" role="tab" aria-selected="true"
-              data-desc="Construyo aplicaciones web y backend robustos, con más de 2 años de experiencia profesional.">
-              <span class="dot"></span>Desarrollador
-            </button>
-            <button class="role-tab" role="tab" aria-selected="false"
-              data-desc="Diseño, presupuesto y desarrollo proyectos web para clientes de forma independiente.">
-              <span class="dot"></span>Freelance
-            </button>
-            <button class="role-tab" role="tab" aria-selected="false"
-              data-desc="Configuro, automatizo y optimizo procesos de negocio sobre la plataforma Salesforce.">
-              <span class="dot"></span>Salesforce Analyst
-            </button>
-          </div>
-
-          <div class="role-desc" id="roleDesc">Construyo aplicaciones web y backend robustos, con más de 2 años de
-            experiencia profesional.</div>
-
-          <p class="lede">Compagino mi puesto como <strong style="color:var(--text)">Salesforce Analyst</strong> con
-            proyectos de <strong style="color:var(--text)">desarrollo freelance</strong>, aportando una mirada técnica
-            tanto a productos internos como a webs para clientes.</p>
-
+          <span class="eyebrow">Automatización para negocios con cita y atención al público</span>
+          <h1>Tu WhatsApp responde aunque estés atendiendo.</h1>
+          <p class="lede">Clínicas, centros y servicios con cita pierden clientes por un mensaje sin contestar o una
+            llamada que no se pudo coger. Preparo un WhatsApp que responde al momento con tu enlace de reserva y las
+            respuestas de siempre, y te pasa la conversación cuando hace falta una persona.</p>
           <div class="cta-row">
-            <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
-            <a href="#contacto" class="btn btn-ghost">Hablemos</a>
+            <a href="#casos" class="btn btn-primary">Ver un caso real</a>
+            <a href="#contacto" class="btn btn-ghost">Cuéntame tu caso</a>
           </div>
+          <ul class="hero-points" aria-label="Garantías">
+            <li><svg class="check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>Sin IA
+              inventando respuestas</li>
+            <li><svg class="check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>Datos en
+              la UE</li>
+            <li><svg class="check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>Pensado
+              con el RGPD</li>
+          </ul>
         </div>
 
-        <div class="avatar-card">
-          <div class="window-bar"><span></span><span></span><span></span></div>
-          <div class="avatar-body">
-            <div class="avatar-circle">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="8" r="4" fill="currentColor" />
-                <path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor" />
-              </svg>
-            </div>
-            <div class="avatar-name">Pablo Frías</div>
-            <div class="avatar-role">Software Developer · Salesforce Analyst</div>
-            <div class="avatar-meta">Málaga y alrededores</div>
-            <div class="avatar-status"><span class="pulse"></span>Disponible para proyectos freelance</div>
-          </div>
-        </div>
+        <figure class="chat" aria-label="Conversación de ejemplo con el asistente de WhatsApp">
+          <figcaption class="chat-head"><span>WhatsApp del negocio</span><span>Ejemplo</span></figcaption>
+          <div class="msg msg-in">Hola, ¿tenéis hueco esta semana?</div>
+          <div class="msg msg-out">¡Hola! Gracias por escribir. Puedes reservar tu cita aquí y elegir el hueco que mejor
+            te venga: [enlace de reserva]<small>Respuesta automática · al momento</small></div>
+          <div class="msg msg-in">¿Dónde estáis? ¿Hay parking?</div>
+          <div class="msg msg-out">Estamos en [dirección]. Hay aparcamiento en [zona].<small>Respuesta fija, escrita por
+              el negocio</small></div>
+          <div class="msg msg-in">Prefiero hablar con alguien</div>
+          <div class="msg msg-out">Claro, aviso al equipo y te escriben en cuanto puedan.<small>Se avisa a una
+              persona</small></div>
+          <p class="chat-note">Conversación ilustrativa, sin datos reales.</p>
+        </figure>
       </div>
     </section>
 
-    <section class="block" id="sobre-mi">
-      <div class="wrap about-grid">
-        <div>
-          <div class="section-head">
-            <span class="section-tag">01 · Sobre mí</span>
-            <h2 class="section-title">Sobre mí</h2>
-          </div>
-          <div class="about-text">
-            <p>Desde pequeño me ha gustado resolver puzzles y cubos de Rubik — con el tiempo, esa afición por resolver
-              problemas se convirtió en mi profesión. Empecé en <strong>Freepik</strong> como Salesforce Developer, donde adquirí un dominio avanzado de la plataforma y participé en proyectos importantes. Hoy
-              formo parte del equipo de <strong>Job&amp;Talent</strong> como <strong>Salesforce Analyst</strong>.</p>
-            <p>En paralelo, compagino mi puesto con proyectos de <strong>desarrollo freelance</strong>, aportando una
-              mirada técnica tanto a productos internos como a webs para clientes.</p>
-            <p>Tengo nivel avanzado de inglés, con experiencia en conversaciones prolongadas con hablantes nativos
-              gracias a programas de inmersión en dos países y seis meses formando parte de un equipo de e-Sports
-              internacional. Fuera del trabajo, disfruto de los videojuegos, el motorsport y el sim racing — una mezcla
-              que refleja mi gusto por la precisión.</p>
-          </div>
-        </div>
-        <div class="skills-groups">
-          <div>
-            <div class="skill-group-label">Aptitudes principales</div>
-            <div class="pill-row">
-              <span class="pill">PayPal</span>
-              <span class="pill">API de OpenAI</span>
-              <span class="pill">Stripe</span>
-            </div>
-          </div>
-          <div>
-            <div class="skill-group-label">Salesforce</div>
-            <div class="pill-row">
-              <span class="pill">Apex</span>
-              <span class="pill">Flow Builder</span>
-              <span class="pill">Lightning Web Components</span>
-              <span class="pill">SOQL</span>
-              <span class="pill">Administración CRM</span>
-            </div>
-          </div>
-          <div>
-            <div class="skill-group-label">Desarrollo</div>
-            <div class="pill-row">
-              <span class="pill">JavaScript</span>
-              <span class="pill">Node.js</span>
-              <span class="pill">React</span>
-              <span class="pill">HTML / CSS</span>
-              <span class="pill">SQL</span>
-            </div>
-          </div>
-          <div>
-            <div class="skill-group-label">Certificaciones</div>
-            <div class="pill-row">
-              <span class="pill">AWS Academy Graduate — Cloud Foundations</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="experiencia">
+    <section id="servicios">
       <div class="wrap">
-        <div class="section-head">
-          <span class="section-tag">02 · Experiencia</span>
-          <h2 class="section-title">Experiencia</h2>
-        </div>
-
-        <div class="timeline">
-          <div class="commit">
-            <div class="commit-title">Salesforce Analyst</div>
-            <div class="commit-meta">Job&amp;Talent · Provincia de Madrid · marzo 2026 — actualidad (5 meses)</div>
-            <div class="commit-body">
-              Análisis y mejora continua de la plataforma Salesforce para distintos equipos de negocio.
-              <ul>
-                <li>Análisis de procesos y requisitos de negocio sobre Salesforce</li>
-                <li>Soporte y optimización de flujos existentes</li>
-                <li>Colaboración con equipos internos para nuevas funcionalidades</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="commit">
-            <div class="commit-title">Desarrollador Freelance</div>
-            <div class="commit-meta">Proyectos independientes · En paralelo</div>
-            <div class="commit-body">
-              Diseño y desarrollo de webs corporativas y herramientas a medida para clientes.
-              <ul>
-                <li>Presupuestos y alcance de proyecto</li>
-                <li>Desarrollo end-to-end del producto final</li>
-                <li>Comunicación directa con cliente e intermediarios</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="commit">
-            <div class="commit-title">Salesforce Developer</div>
-            <div class="commit-meta">Freepik · Málaga, Andalucía · marzo 2024 — marzo 2026 (2 años 1 mes)</div>
-            <div class="commit-body">
-              Desarrollo sobre la plataforma Salesforce, contribuyendo a varios proyectos importantes de la compañía.
-              <ul>
-                <li>Desarrollo de triggers y clases Apex a medida</li>
-                <li>Construcción de componentes con Lightning Web Components</li>
-                <li>Configuración de flujos y automatizaciones con Flow Builder</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="commit">
-            <div class="commit-title">Desarrollo de Aplicaciones Multiplataforma</div>
-            <div class="commit-meta">CPIFP Alan Turing · septiembre 2022 — junio 2024</div>
-            <div class="commit-body">
-              Formación en desarrollo de software, base de todo lo que vino después.
-            </div>
-          </div>
+        <span class="section-tag">Qué hago</span>
+        <h2>Menos mensajes perdidos, menos tareas repetidas</h2>
+        <p class="section-intro">Trabajo sobre las herramientas que ya usas: no tienes que cambiar tu agenda ni tu
+          número de WhatsApp.</p>
+        <div class="cards">
+          <article class="card">
+            <span class="card-num">01</span>
+            <h3>Atención y citas por WhatsApp</h3>
+            <p>Un asistente que contesta en cuanto llega un mensaje o una llamada perdida.</p>
+            <ul>
+              <li>Enlace a tu sistema de reservas</li>
+              <li>Respuestas fijas a las preguntas de siempre</li>
+              <li>Paso a una persona cuando lo piden</li>
+              <li>Se calla cuando contestas tú</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="card-num">02</span>
+            <h3>Automatización de procesos</h3>
+            <p>Conecto las herramientas de tu negocio para que la información no se copie a mano.</p>
+            <ul>
+              <li>Avisos al equipo por email</li>
+              <li>Integraciones entre aplicaciones</li>
+              <li>Flujos en CRM, incluido Salesforce</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="card-num">03</span>
+            <h3>Puesta en marcha y mantenimiento</h3>
+            <p>Lo dejo funcionando en un servidor en la UE a nombre de tu negocio y lo cuido después.</p>
+            <ul>
+              <li>Instalación y pruebas antes de abrir</li>
+              <li>Copias de seguridad y actualizaciones</li>
+              <li>Tú eres el dueño de cuentas y datos</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="block" id="proyectos">
+    <section id="casos">
       <div class="wrap">
-        <div class="section-head">
-          <span class="section-tag">03 · Proyectos</span>
-          <h2 class="section-title">Algunos proyectos</h2>
-        </div>
+        <span class="section-tag">Casos de éxito</span>
+        <h2>Un caso real, contado sin adornos</h2>
+        <p class="section-intro">Por respeto a mis clientes, no doy su nombre ni enseño conversaciones reales.</p>
 
-        <div class="projects-grid">
+        <article class="case" aria-labelledby="caso-fisio">
+          <div class="case-head">
+            <h3 id="caso-fisio">Clínica de fisioterapia en Málaga</h3>
+            <div class="case-meta">
+              <span class="chip">WhatsApp Cloud API</span>
+              <span class="chip">n8n</span>
+              <span class="chip">Sin IA</span>
+              <span class="chip">Servidor en la UE</span>
+            </div>
+          </div>
 
-          <div class="project-card">
-            <div class="window-bar"><span></span><span></span><span></span></div>
-            <div class="project-body">
-              <span class="project-tag" style="color:var(--accent); border-color:rgba(94,234,212,0.3);">Proyecto
-                personal</span>
-              <div class="project-title">PokedexIP</div>
-              <p class="project-desc">Un front del que estoy orgulloso, de los tiempos en los que aún no había IA.
-                Proyecto personal, sin cliente detrás, que consume la PokeAPI para listar y explorar Pokémon con ficha
-                de detalle.</p>
-              <div class="project-stack">
-                <span class="stack-chip">TypeScript</span>
-                <span class="stack-chip">PokeAPI</span>
+          <div class="case-grid">
+            <div>
+              <div class="case-block">
+                <h4>El problema</h4>
+                <p>Una clínica nueva, con el equipo en consulta casi todo el día. Mientras atendían a un paciente, los
+                  mensajes de WhatsApp y las llamadas se quedaban sin respuesta, y quien buscaba cita acababa
+                  probando en otro sitio.</p>
               </div>
-              <div class="project-links">
-                <a href="https://pablofriascampos.github.io/Pokedex-IP/#/pokemonList" target="_blank" rel="noopener"
-                  style="color:var(--accent);">Ver demo</a><span>·</span>
-                <a href="https://github.com/PabloFriasCampos/Pokedex-IP" target="_blank" rel="noopener"
-                  style="color:var(--accent);">Ver repositorio</a>
+              <div class="case-block">
+                <h4>La solución</h4>
+                <ul class="bullets">
+                  <li><strong>Respuesta al momento</strong> al primer mensaje o a una llamada perdida, con el enlace de
+                    reserva del sistema de citas que ya usaba la clínica.</li>
+                  <li><strong>Respuestas fijas, sin IA</strong>, a las preguntas frecuentes (ubicación y parking). Lo que
+                    el asistente no sabe, no lo inventa.</li>
+                  <li><strong>Derivación a una persona</strong>: si el paciente lo pide, se avisa al equipo.</li>
+                  <li><strong>Silencio cuando contesta la clínica</strong>: el número sigue siendo el de siempre y, en
+                    cuanto alguien responde a mano, el asistente se aparta.</li>
+                </ul>
               </div>
             </div>
-          </div>
 
-          <div class="project-card">
-            <div class="window-bar"><span></span><span></span><span></span></div>
-            <div class="project-body">
-              <span class="project-tag">Proyecto de ejemplo</span>
-              <div class="project-title">Panel de integración CRM</div>
-              <p class="project-desc">Representativo del trabajo diario en Salesforce: panel interno para centralizar
-                datos de clientes y automatizar el seguimiento comercial.</p>
-              <div class="project-stack">
-                <span class="stack-chip">Apex</span>
-                <span class="stack-chip">LWC</span>
-                <span class="stack-chip">Flow Builder</span>
-              </div>
-              <div class="project-links"><span>Código privado</span></div>
+            <div>
+              <h4>Cómo funciona</h4>
+              <ol class="flow" aria-label="Arquitectura de la solución, paso a paso">
+                <li><strong>El paciente escribe o llama</strong>Al número de WhatsApp de la clínica, el mismo de
+                  siempre.</li>
+                <li><strong>WhatsApp Cloud API (Meta)</strong>Avisa del mensaje al servidor de la clínica, con firma
+                  verificada.</li>
+                <li><strong>n8n en un servidor en la UE</strong>Decide con reglas fijas: enlace de reserva, respuesta
+                  frecuente, aviso a una persona o silencio.</li>
+                <li><strong>La clínica sigue al mando</strong>El equipo ve todo en su WhatsApp Business y puede
+                  contestar cuando quiera.</li>
+              </ol>
             </div>
           </div>
 
-        </div>
+          <p class="case-foot"><strong>Estado:</strong> construido y probado; puesta en marcha con el número de la
+            clínica en curso. Sin cifras de resultados: prefiero no dar números que no pueda demostrar. La agenda de la
+            clínica no se toca; el asistente solo envía su enlace de reserva.</p>
+        </article>
       </div>
     </section>
 
-    <section class="block" id="contacto">
+    <section id="como-trabajo">
       <div class="wrap">
-        <div class="section-head">
-          <span class="section-tag">04 · Contacto</span>
-          <h2 class="section-title">Hablemos de tu proyecto</h2>
-        </div>
+        <span class="section-tag">Cómo trabajo</span>
+        <h2>Paso a paso y sin sorpresas</h2>
+        <p class="section-intro">Proyectos pequeños, claros y que entiendes de principio a fin.</p>
+
+        <ol class="steps">
+          <li class="step">
+            <h3>Escucho</h3>
+            <p>Una charla para entender dónde se pierden mensajes, llamadas o tiempo en tu día a día.</p>
+          </li>
+          <li class="step">
+            <h3>Propongo</h3>
+            <p>Te explico qué haría, qué necesitas tener y qué no hace falta. Por escrito y sin tecnicismos.</p>
+          </li>
+          <li class="step">
+            <h3>Construyo y pruebo</h3>
+            <p>Tú validas los textos. Todo se prueba con un número de pruebas antes de tocar el tuyo.</p>
+          </li>
+          <li class="step">
+            <h3>Pongo en marcha</h3>
+            <p>Lo activo contigo delante y quedo a mano para ajustes y mantenimiento.</p>
+          </li>
+        </ol>
+
+        <ul class="principles">
+          <li class="principle">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6l8-3z" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linejoin="round" />
+              <path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div>
+              <h3>Sin IA inventando respuestas</h3>
+              <p>Respuestas fijas que escribe y aprueba tu negocio. Si algo no está previsto, contesta una persona.</p>
+            </div>
+          </li>
+          <li class="principle">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+              <path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5S9.6 5.9 12 3.5z"
+                fill="none" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+            <div>
+              <h3>Datos en la UE</h3>
+              <p>Servidor en la Unión Europea, contratado a nombre de tu negocio. Las cuentas y los datos son tuyos.</p>
+            </div>
+          </li>
+          <li class="principle">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor"
+                stroke-width="1.8" />
+              <path d="M8.5 10.5V7.5a3.5 3.5 0 017 0v3" fill="none" stroke="currentColor" stroke-width="1.8" />
+            </svg>
+            <div>
+              <h3>RGPD desde el principio</h3>
+              <p>Solo los datos imprescindibles, el tiempo justo, y nada de leer información sensible sin tu permiso
+                expreso.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="wrap">
+        <span class="section-tag">Contacto</span>
+        <h2>¿Hablamos?</h2>
         <div class="contact-box">
           <div>
-            <h3>¿Tienes algo en mente?</h3>
-            <p>Disponible para proyectos freelance y colaboraciones. Escríbeme y lo hablamos con calma.</p>
+            <p>Cuéntame cómo atendéis hoy los mensajes y las llamadas, y te digo con sinceridad si esto encaja en tu
+              negocio. Sin compromiso.</p>
           </div>
           <div class="contact-links">
-            <a class="btn btn-primary" href="mailto:pablofriascampo@gmail.com">Enviar email</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/pablo-frías-campos" aria-label="LinkedIn"
-              target="_blank" rel="noopener">LinkedIn</a>
-            <a class="btn btn-ghost" href="https://github.com/PabloFriasCampos" aria-label="GitHub" target="_blank"
+            <a class="btn btn-primary" href="mailto:pablofriascampo@gmail.com">Escríbeme un email</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/pablo-frías-campos" target="_blank"
+              rel="noopener">LinkedIn</a>
+            <a class="btn btn-ghost" href="https://github.com/PabloFriasCampos" target="_blank"
               rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="perfil">
+      <div class="wrap">
+        <span class="section-tag">Perfil</span>
+        <h2>Quién hay detrás</h2>
+        <div class="profile-grid">
+          <div>
+            <p>Soy <strong>Pablo Frías</strong>, desarrollador de software en Málaga. Me dedico a automatizar procesos
+              de negocio y llevo años trabajando con <strong>Salesforce</strong>, desarrollo web y backend. Además,
+              desarrollo <strong>proyectos propios</strong> para negocios como el de arriba.</p>
+            <p>Me gusta resolver problemas concretos con soluciones sencillas que el cliente entienda y pueda
+              mantener.</p>
+            <p class="label">Herramientas</p>
+            <div class="pill-row">
+              <span class="pill">n8n</span>
+              <span class="pill">WhatsApp Cloud API</span>
+              <span class="pill">Salesforce (Apex, Flow, LWC)</span>
+              <span class="pill">JavaScript · Node.js</span>
+              <span class="pill">SQL</span>
+              <span class="pill">Docker</span>
+            </div>
+          </div>
+          <ul class="timeline" aria-label="Trayectoria">
+            <li>
+              <div class="t-title">Proyectos propios</div>
+              <div class="t-meta">Automatización de atención y citas para negocios</div>
+            </li>
+            <li>
+              <div class="t-title">Salesforce Developer · Freepik</div>
+              <div class="t-meta">Málaga · 2024 — 2026 · Apex, Lightning Web Components y Flow Builder</div>
+            </li>
+            <li>
+              <div class="t-title">Desarrollo de Aplicaciones Multiplataforma</div>
+              <div class="t-meta">CPIFP Alan Turing · 2022 — 2024</div>
+            </li>
+            <li>
+              <div class="t-title">AWS Academy Graduate</div>
+              <div class="t-meta">Cloud Foundations</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="side-project">
+          <p><strong>Otros proyectos · PokedexIP.</strong> Proyecto personal de front-end en TypeScript que consume la
+            PokeAPI para listar y explorar Pokémon.</p>
+          <div class="links">
+            <a href="https://pablofriascampos.github.io/Pokedex-IP/#/pokemonList" target="_blank" rel="noopener">Ver
+              demo</a>
+            <a href="https://github.com/PabloFriasCampos/Pokedex-IP" target="_blank" rel="noopener">Repositorio</a>
           </div>
         </div>
       </div>
@@ -949,22 +1083,11 @@
   </main>
 
   <footer>
-    <div class="wrap">© 2026 Pablo Frías Campos</div>
+    <div class="wrap">
+      <span>© 2026 Pablo Frías Campos</span>
+      <span>Esta web no usa cookies ni herramientas de seguimiento.</span>
+    </div>
   </footer>
-
-  <script>
-    const tabs = document.querySelectorAll('.role-tab');
-    const desc = document.getElementById('roleDesc');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        desc.innerHTML = tab.dataset.desc;
-      });
-    });
-  </script>
-
 </body>
 
 </html>
