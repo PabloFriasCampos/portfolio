@@ -1,7 +1,7 @@
 # portfolio · CLAUDE.md
 
 Web pública de Pablo en GitHub Pages: https://pablofriascampos.github.io/portfolio/
-Un solo `index.html`, sin build ni dependencias (salvo Google Fonts, ver POR-3). Se trabaja en **español de España**.
+Un solo `index.html`, sin build ni dependencias externas: las fuentes (Bricolage Grotesque e Instrument Serif, OFL) se sirven en local desde `assets/fonts/` (POR-3), sin Google Fonts. Se trabaja en **español de España**.
 
 > Este archivo vive en `.claude/` a propósito: GitHub Pages (Jekyll) ignora las carpetas que empiezan por punto, así que **no se publica**. No lo muevas a la raíz.
 
