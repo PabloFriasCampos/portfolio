@@ -25,7 +25,7 @@ Referencia de calidad (sin copiarla): https://www.adrianmartin.me/. Titular giga
 ## Cómo trabajar (operativa)
 | Quiero… | Cómo |
 |---|---|
-| Ver la web en local | `npx serve -l tcp://127.0.0.1:4590 .` o `python -m http.server 4590 --bind 127.0.0.1` |
+| Ver la web en local | `npx serve -l tcp://127.0.0.1:4590 .` (en esta máquina no hay Python) |
 | Validar | Sin tests: HTML bien formado, consola sin errores, sin scroll horizontal y anclas que funcionan, a 1440 y 390 px |
 | Ver las tareas | MCP `hq` → `tareas_listar` / `tarea_ver POR-<n>`; o `node C:/Users/P4/orca/projects/hq/bin/hq.js tareas listar --proyecto portfolio` |
 | Ver si Pages desplegó | `gh run list -L 2` (workflow «pages build and deployment») |
