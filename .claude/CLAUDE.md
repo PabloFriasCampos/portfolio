@@ -37,12 +37,12 @@ El repo **no tiene `hq.json`**, así que no se aplican las skills `/hq-*` al pie
 - **Worker** = un worktree de Orca por tarea, siempre desde `main`, rama `feat-por-<n>-<slug>` y PR `[POR-<n>] …`. Se lanza con `tarea_lanzar` del MCP `hq` (comprueba conflictos), tras enseñar el brief (`tarea_brief`) y con OK de Pablo. Alternativa: `orca worktree create --name feat-por-<n>-<slug> --no-parent --agent claude --prompt "<brief>"`.
 - **Avisos**: el worker no pregunta en su terminal. Busca al coordinador con `ListAgents` (sesión `portfolio-…`) y le escribe por `SendMessage`, con la primera línea `[POR-<n>] <qué pasa>`. Avisa al abrir la PR, si necesita una decisión, si se bloquea y al terminar. El coordinador resume para Pablo y le devuelve su respuesta.
 - **Seguimiento**: `ListAgents` (ocupado o libre), `git worktree list`, `gh pr list`. Para enterarte de cuándo termina un worker usa `SendMessage` con `notify_when_idle`; no hagas sondeos en bucle.
-- **Cierre**: OK de Pablo → `gh pr merge <n> --squash --match-head-commit <sha>` → `git pull --ff-only` → comprobar el despliegue de Pages → `tarea_mover POR-<n> hecha` → avisar al worker. Borrar el worktree y la rama (`orca worktree rm`, `git branch -d`, rama remota) **solo con OK de Pablo**.
+- **Cierre**: OK de Pablo → `gh pr merge <n> --squash --match-head-commit <sha>` → `git pull --ff-only` → comprobar el despliegue de Pages → `tarea_mover POR-<n> hecha` → avisar al worker. Quitar el worktree (`orca worktree rm`) y la rama local (`git branch -d`) de una tarea cuya PR ya está mergeada **no pide OK**, siempre que el worktree esté limpio; la rama remota no se borra salvo que Pablo lo pida.
 - Paralelo: casi todo toca `index.html`, que es **cuello de botella**. Un worker cada vez.
 - Detalle del método: `conocimiento/metodo/` del HQ (`coordinador-y-workers.md`, `brief-de-worker.md`, `avisos-sendmessage.md`, `cierre-de-tarea.md`).
 
 ## Acciones hacia fuera (siempre con OK explícito de Pablo; un «sí» no se hereda)
-Push a `main`, merges, borrados (ramas, worktrees, archivos publicados), descargar recursos de terceros (fuentes, imágenes), crear repos o recursos externos y enviar mensajes a personas reales.
+Push a `main`, merges, borrados (ramas, worktrees, archivos publicados; salvo el worktree y la rama local de una PR ya mergeada), descargar recursos de terceros (fuentes, imágenes), crear repos o recursos externos y enviar mensajes a personas reales.
 
 ## Definición de hecho
 Página validada a mano a 1440 y 390 px · sin secretos ni datos personales de clientes finales · sin cifras inventadas · PR pequeña con resumen, «cómo revisar» y capturas (quitadas después).
